@@ -4,6 +4,8 @@ import dev.langchain4j.model.ollama.OllamaChatModel;
 import dev.langchain4j.service.AiServices;
 
 import java.util.Scanner;
+import java.time.Duration;
+
 
 public class Main {
 
@@ -15,19 +17,21 @@ public class Main {
 
         SimpleAgent agent = AiServices.builder(SimpleAgent.class)
                 .chatLanguageModel(OllamaChatModel.builder()
-                        .baseUrl("http://localhost:11434")
-                        .modelName("llama3") // or mistral, phi3, etc.
-                        .build())
+    .baseUrl("http://localhost:11434")
+    .modelName("llama3")
+    .timeout(Duration.ofSeconds(120)) 
+    .build())
+
                 .build();
 
         Scanner scanner = new Scanner(System.in);
-        System.out.println("🧠 Simple Chat Agent with Ollama. Type your question:");
+        System.out.println(" Simple Chat Agent with Ollama. Type your question:");
 
         while (true) {
             System.out.print("> ");
             String input = scanner.nextLine();
             String response = agent.chat(input);
-            System.out.println("🤖: " + response);
+            System.out.println("Bot: " + response);
         }
     }
 }
@@ -60,18 +64,18 @@ public class Main {
 //                         .baseUrl("http://localhost:11434")
 //                         .modelName("llama3")
 //                         .build())
-//                 .chatMemory((dev.langchain4j.memory.ChatMemory) chatMemory)              // ✅ Required for tool use
-//                 .tools(calculatorTool)               // ✅ Add your custom tool
+//                 .chatMemory((dev.langchain4j.memory.ChatMemory) chatMemory)             
+//                 .tools(calculatorTool)              
 //                 .build();
 
 //         Scanner scanner = new Scanner(System.in);
-//         System.out.println("🧠 Simple Chat Agent with Ollama + Tools + Memory. Type your question:");
+//         System.out.println("Simple Chat Agent with Ollama + Tools + Memory. Type your question:");
 
 //         while (true) {
 //             System.out.print("> ");
 //             String input = scanner.nextLine();
 //             String response = agent.chat(input);
-//             System.out.println("🤖: " + response);
+//             System.out.println("BOT: " + response);
 //         }
 //     }
 // }
